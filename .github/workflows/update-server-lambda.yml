@@ -1,0 +1,34 @@
+name: Update server lambda
+on:
+  push:
+    paths:
+      - server/**
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build
+        run: |
+          cd server
+          npm ci
+          cd dist && zip -r -9 app.zip *
+
+      - name: Update
+        uses: kazimanzurrashid/aws-lambda-update-action@v2.0.3
+        with:
+          zip-file: dist/app.zip
+          lambda-name: stylin-assignement-server
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
