@@ -2,7 +2,7 @@ import express, { type Request, type Response } from "express";
 import cors from "cors";
 
 const app = express();
-cors();
+app.use(cors());
 
 const PORT = process.env.PORT ? Number.parseInt(process.env.PORT) : 3000;
 
