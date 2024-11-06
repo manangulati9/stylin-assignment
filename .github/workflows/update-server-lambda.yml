@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: |
           cd server
-          npm ci
+          npm install
           cd dist && zip -r -9 app.zip *
 
       - name: Update
