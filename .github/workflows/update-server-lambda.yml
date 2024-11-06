@@ -25,7 +25,7 @@ jobs:
       - name: Update
         uses: kazimanzurrashid/aws-lambda-update-action@v2.0.3
         with:
-          zip-file: app.zip
+          zip-file: server/app.zip
           lambda-name: stylin-assignement-server
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
