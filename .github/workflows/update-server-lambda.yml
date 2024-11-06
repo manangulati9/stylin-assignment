@@ -21,12 +21,12 @@ jobs:
         run: |
           cd server
           npm install
-          cd dist && zip -r -9 app.zip *
+          zip -r -9 app.zip *
 
       - name: Update
         uses: kazimanzurrashid/aws-lambda-update-action@v2.0.3
         with:
-          zip-file: dist/app.zip
+          zip-file: app.zip
           lambda-name: stylin-assignement-server
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
