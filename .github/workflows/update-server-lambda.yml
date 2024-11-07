@@ -20,7 +20,8 @@ jobs:
       - name: Build
         run: |
           cd server
-          zip -r app.zip . -x "node_modules/*"
+          npm install
+          zip -r app.zip .
 
       - name: Update
         uses: kazimanzurrashid/aws-lambda-update-action@v2.0.3
