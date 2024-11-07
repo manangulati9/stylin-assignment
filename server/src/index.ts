@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import type { Handler } from "aws-lambda";
+import serverless from "serverless-http";
 
 const app = express();
 dotenv.config();
@@ -9,16 +10,21 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
-export const handler: Handler = async (event, context) => {
-  console.log("EVENT: \n" + JSON.stringify(event, null, 2));
+app.get("/", (_, res) => {
+  res.send("Hello World");
+});
 
-  app.get("/", (_, res) => {
-    res.send("Hello World");
-  });
+const app_handler = serverless(app);
 
-  app.listen(3000, () => {
+const startServer = async () => {
+  app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
   });
+};
 
-  return JSON.stringify(context.logStreamName);
+startServer();
+
+export const handler: Handler = async (event, context) => {
+  const response = app_handler(event, context);
+  return response;
 };
