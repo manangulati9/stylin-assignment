@@ -20,5 +20,5 @@ export const handler: Handler = async (event, context) => {
     console.log(`Server started on port ${PORT}`);
   });
 
-  return context.logStreamName;
+  return JSON.stringify(context.logStreamName);
 };
